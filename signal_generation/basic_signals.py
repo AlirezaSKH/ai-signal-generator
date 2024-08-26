@@ -1,6 +1,5 @@
- 
 import pandas as pd
-from src.technical_analysis.indicators import simple_moving_average, relative_strength_index
+from technical_analysis.indicators import simple_moving_average, relative_strength_index
 
 def generate_sma_crossover_signals(data: pd.DataFrame, short_window: int, long_window: int) -> pd.Series:
     """
@@ -14,8 +13,8 @@ def generate_sma_crossover_signals(data: pd.DataFrame, short_window: int, long_w
     Returns:
         pd.Series: Series of buy (1), sell (-1), and hold (0) signals
     """
-    short_sma = simple_moving_average(data['close'], short_window)
-    long_sma = simple_moving_average(data['close'], long_window)
+    short_sma = simple_moving_average(data['Close'], short_window)
+    long_sma = simple_moving_average(data['Close'], long_window)
     
     signals = pd.Series(0, index=data.index)
     signals[short_sma > long_sma] = 1  # Buy signal
@@ -36,7 +35,7 @@ def generate_rsi_signals(data: pd.DataFrame, window: int, overbought: float, ove
     Returns:
         pd.Series: Series of buy (1), sell (-1), and hold (0) signals
     """
-    rsi = relative_strength_index(data['close'], window)
+    rsi = relative_strength_index(data['Close'], window)
     
     signals = pd.Series(0, index=data.index)
     signals[rsi < oversold] = 1  # Buy signal
